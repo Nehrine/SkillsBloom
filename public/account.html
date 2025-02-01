@@ -15,42 +15,49 @@
       <a href="#" onclick="logoutUser()">Logout</a> <!-- Logout function -->
     </nav>
   </header>
-<!--<main>
-    <section>
-      <h2>Your Profile</h2>
-      <p><strong>Name:</strong> <span id="profileName"></span></p>
-      <p><strong>Email:</strong> <span id="profileEmail"></span></p>
-    </section>
-  </main>-->
+
   <main>
     <section>
       <h2>Your Profile</h2>
-      <p><strong>Name:</strong> <span id="profileName"></span></p>
+      <img id="profilePic" src="default-profile.png" alt="Profile Picture" width="150" height="150">
+      <input type="file" id="profilePicUpload" accept="image/*" onchange="uploadProfilePic(event)">
+      <p><strong>Name:</strong> <span id="profileFullName"></span></p>
       <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+      <p><strong>Bio:</strong> <span id="profileBio"></span></p>
+      <textarea id="bioInput" placeholder="Add a bio..." rows="4" cols="50"></textarea>
+      <button onclick="updateBio()">Update Bio</button>
     </section>
-  
+      
     <section>
       <h2>Your Activity</h2>
       
       <!-- Scheduled Sessions -->
       <h3>Scheduled Sessions</h3>
       <ul id="scheduledSessionsList">
-        <li>No sessions scheduled yet.</li>
+        <li class="empty-placeholder">No sessions scheduled yet.</li>
       </ul>
   
       <!-- Skills Viewed -->
       <h3>Skills Viewed</h3>
       <ul id="skillsViewedList">
-        <li>No skills viewed yet.</li>
+        <li class="empty-placeholder">No skills viewed yet.</li>
       </ul>
   
       <!-- Forums Participated -->
       <h3>Forum Posts</h3>
       <ul id="forumPostsList">
-        <li>No forum activity yet.</li>
+        <li class="empty-placeholder">No forum activity yet.</li>
       </ul>
     </section>
   </main>
-  
 </body>
+</html>
+
+<script>
+
+  function greeting() {
+    showUsernameinProfile();
+  }
+  setTimeout(greeting,100);
+</script>
 </html>
