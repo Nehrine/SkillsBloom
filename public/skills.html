@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Skill Categories</title>
   <link rel="stylesheet" href="styles.css" />
-  <script src="script.js" defer></script> <!-- Link external JavaScript -->
+  <script src="script.js" defer></script> 
 </head>
 <body>
   <header>
@@ -14,31 +14,223 @@
       <a href="index.html">Home</a>
     </nav>
   </header>
+
   <main>
     <!-- Skill search/filter input -->
-    <section>
+    <section class="search-section">
       <h2>Find Skills</h2>
       <label for="skillSearch">Enter a skill:</label><br />
       <input type="text" id="skillSearch" placeholder="Search skills..." oninput="filterCategories()" />
+      <ul id="suggestions"></ul> <!-- Live search suggestions -->
     </section>
 
     <!-- Skill categories -->
-    <section>
+    <section class="categories">
       <h2>Select a Category</h2>
       <ul id="categoryList">
-        <li><a href="#" onclick="selectCategory('Technology')">Technology</a></li>
-        <li><a href="#" onclick="selectCategory('Science')">Science</a></li>
-        <li><a href="#" onclick="selectCategory('Art')">Art</a></li>
-        <li><a href="#" onclick="selectCategory('Cooking')">Cooking</a></li>
-        <li><a href="#" onclick="selectCategory('Music')">Music</a></li>
-        <li><a href="#" onclick="selectCategory('Languages')">Languages</a></li>
+        <li>
+          <a href="#" onclick="toggleSubcategories('technology')">💻 Technology</a>
+          <ul id="technology" class="subcategories"></ul>
+        </li>
+        <li>
+          <a href="#" onclick="toggleSubcategories('science')">🔬 Science</a>
+          <ul id="science" class="subcategories"></ul>
+        </li>
+        <li>
+          <a href="#" onclick="toggleSubcategories('art')">🎨 Art</a>
+          <ul id="art" class="subcategories"></ul>
+        </li>
+        <li>
+          <a href="#" onclick="toggleSubcategories('cooking')">🍳 Cooking</a>
+          <ul id="cooking" class="subcategories"></ul>
+        </li>
+        <li>
+          <a href="#" onclick="toggleSubcategories('music')">🎵 Music</a>
+          <ul id="music" class="subcategories"></ul>
+        </li>
+        <li>
+          <a href="#" onclick="toggleSubcategories('languages')">🌍 Languages</a>
+          <ul id="languages" class="subcategories"></ul>
+        </li>
       </ul>
     </section>
 
+  <script>
+    // Define subcategories and sub-subfields for the expanded list
+    const categoriesData = {
+      technology: {
+        "Emerging Technologies": ["Blockchain", "IoT", "AR & VR"],
+        "Artificial Intelligence": ["NLP", "Computer Vision", "Robotics", "Machine Learning"],
+        "Machine Learning": ["Supervised Learning","Unsupervised Learning","Semi-supervised Learning","Reinforcement Learning","Neural Networks and Deep Learning","Natural Language Processing"],
+        "Data Science": ["Data Analysis", "Data Visualization", "Big Data", "Data Mining"],
+        "Software Engineering": ["DevOps", "Agile Methodologies", "Software Testing", "Cloud Computing", "Mobile App Development", "Web Development", "Game Development", "Software Architecture", "API Development", "Cybersecurity", "Database Management", "CI/CD", "Software Project Management", "UI/UX Design"],
+        "Hardware Engineering": {
+          "Computer Hardware": ["Microprocessors", "Embedded Systems"],
+          "Electronics": ["Analog Electronics", "Digital Electronics"],
+          "Circuit Design": ["PCB Design", "IC Design"],
+          "Robotics and Automation": ["Robot Design", "Mechatronics"],
+          "IoT Hardware": ["Sensor Design", "Actuator Design"]
+        },
+        "Digital Marketing": ["SEO", "Social Media Marketing", "Content Marketing"]
+        
+      },
+      science: {
+        "Astronomy": ["Astrophysics", "Space Exploration", "Cosmology", "Planetary Science"],
+        "Environmental Science": ["Climate Change", "Conservation Biology", "Renewable Energy", "Ecology"],
+        "Psychology": ["Cognitive Psychology", "Behavioral Psychology", "Developmental Psychology", "Clinical Psychology"],
+        "Mathematics": ["Algebra", "Calculus", "Statistics", "Geometry"]
+      },
+      cooking: {
+        "International Cuisine": ["Italian", "Chinese", "Indian", "Mexican", "Thai", "Japanese", "Greek", "French"],
+        "Special Diets": ["Vegetarian Cooking", "Vegan Cooking", "Gluten-Free Cooking", "Keto Cooking"],
+        "Baking": ["Pastry Making", "Bread Baking", "Cake Decorating", "Cookie Baking"],
+        "Beverage Preparation": ["Mixology", "Coffee Brewing", "Tea Preparation", "Smoothie Making"]
+      },
+      music: {
+        "Instruments": ["Guitar", "Piano", "Violin", "Drums", "Flute", "Saxophone"],
+        "Vocal Training": ["Singing Techniques", "Vocal Warm-Ups", "Performance Techniques"],
+        "Music Production": ["Audio Engineering", "Mixing and Mastering", "Music Composition", "Sound Design"],
+        "Music History": ["Classical Music History", "Popular Music History", "Jazz History", "Rock History"]
+      },
+      art: {
+        "Photography": ["Portrait Photography", "Landscape Photography", "Photo Editing", "Street Photography"],
+        "Crafting": ["Knitting", "Crochet", "Paper Crafts", "Jewelry Making", "Pottery"],
+        "Performing Arts": ["Theater Acting", "Dance", "Performance Art", "Improvisation"]
+      },
+      languages: {
+        "Foreign Languages": ["English", "Spanish", "French", "Mandarin", "German","Japanese"],
+        "Sign Languages": ["ASL", "BSL", "International Sign"],
+        "Literature": ["English Literature", "Spanish Literature", "French Literature", "Chinese Literature", "German Literature"]
+      }
+    };
+
+    function toggleSubcategories(category) {
+      // Hide all subcategories
+      document.querySelectorAll(".subcategories").forEach(ul => {
+        if (ul.id !== category) {
+          ul.innerHTML = "";
+          ul.style.display = "none";
+        }
+      });
+
+      let subcategoryList = document.getElementById(category);
+
+      if (subcategoryList.innerHTML === "") {
+        // Populate subcategories
+        Object.keys(categoriesData[category]).forEach(sub => {
+          let li = document.createElement("li");
+          li.innerHTML = `<a href="#" onclick="toggleSubSubcategories('${category}', '${sub}')">${sub}</a>`;
+          let subSubList = document.createElement("ul");
+          subSubList.id = `${category}-${sub.replace(/\s+/g, "")}`;
+          subSubList.classList.add("sub-subcategories");
+          subcategoryList.appendChild(li);
+          subcategoryList.appendChild(subSubList);
+        });
+        subcategoryList.style.display = "block";
+      } else {
+        subcategoryList.innerHTML = "";
+        subcategoryList.style.display = "none";
+      }
+    }
+
+    function toggleSubSubcategories(category, subcategory) {
+      // Hide all sub-subcategories
+      document.querySelectorAll(".sub-subcategories").forEach(ul => {
+        if (!ul.id.includes(subcategory.replace(/\s+/g, ""))) {
+          ul.innerHTML = "";
+          ul.style.display = "none";
+        }
+      });
+
+      let subSubList = document.getElementById(`${category}-${subcategory.replace(/\s+/g, "")}`);
+
+      if (subSubList.innerHTML === "") {
+        // Populate sub-subcategories
+        if (Array.isArray(categoriesData[category][subcategory])) {
+          categoriesData[category][subcategory].forEach(subSub => {
+            let li = document.createElement("li");
+            li.textContent = subSub;
+            subSubList.appendChild(li);
+          });
+        } else {
+          // If it's an object (like "Hardware Engineering")
+          Object.keys(categoriesData[category][subcategory]).forEach(subSubCategory => {
+            let li = document.createElement("li");
+            li.innerHTML = `<a href="#" onclick="toggleSubSubSubcategories('${category}', '${subcategory}', '${subSubCategory}')">${subSubCategory}</a>`;
+            let subSubSubList = document.createElement("ul");
+            subSubSubList.id = `${category}-${subcategory.replace(/\s+/g, "")}-${subSubCategory.replace(/\s+/g, "")}`;
+            subSubSubList.classList.add("sub-sub-subcategories");
+            subSubList.appendChild(li);
+            subSubList.appendChild(subSubSubList);
+          });
+        }
+        subSubList.style.display = "block";
+      } else {
+        subSubList.innerHTML = "";
+        subSubList.style.display = "none";
+      }
+    }
+
+    function toggleSubSubSubcategories(category, subcategory, subSubCategory) {
+      let subSubSubList = document.getElementById(`${category}-${subcategory.replace(/\s+/g, "")}-${subSubCategory.replace(/\s+/g, "")}`);
+
+      if (subSubSubList.innerHTML === "") {
+        // Populate sub-sub-subcategories
+        categoriesData[category][subcategory][subSubCategory].forEach(subSubSub => {
+          let li = document.createElement("li");
+          li.textContent = subSubSub;
+          subSubSubList.appendChild(li);
+        });
+        subSubSubList.style.display = "block";
+      } else {
+        subSubSubList.innerHTML = "";
+        subSubSubList.style.display = "none";
+      }
+    }
+  </script>
+
+  <style>
+    .subcategories, .sub-subcategories, .sub-sub-subcategories {
+      display: none;
+      list-style-type: none;
+      padding-left: 20px;
+    }
+
+    .subcategories li, .sub-subcategories li, .sub-sub-subcategories li {
+      background: #f8f8f8;
+      padding: 5px;
+      margin: 2px 0;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #categoryList li {
+      cursor: pointer;
+      font-weight: bold;
+      padding: 10px;
+    }
+  </style>
+
     <!-- Display selected category -->
-    <section id="selectedCategory" style="display: none;">
+    <section id="selectedCategory" class="hidden">
       <h2>Selected Category</h2>
       <p id="categoryName"></p>
+    </section>
+
+    <h3 class="trends-title">Current Trends</h3>
+    <ul id="trendingSkills">
+      <li>AI & Machine Learning</li>
+      <li>Cybersecurity</li>
+      <li>3D Modeling</li>
+      <li>Vegan Cooking</li>
+      <li>Podcasting</li>
+    </ul>
+    
+
+    <!-- Random Skill of the Day -->
+    <section class="random-skill">
+      <h2>Skill of the Day</h2>
+      <p id="skillOfTheDay">Loading...</p>
     </section>
   </main>
 </body>
