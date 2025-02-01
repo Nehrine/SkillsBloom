@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schedule a Session</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script> <!-- Link external JavaScript -->
+</head>
+<body>
+  <header>
+    <h1>Schedule a Session</h1>
+    <nav>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h2>Schedule Your Session</h2>
+      <form onsubmit="scheduleSession(event)">
+        <label for="sessionTopic">Session Topic:</label><br />
+        <input type="text" id="sessionTopic" required /><br />
+        <label for="sessionDate">Date:</label><br />
+        <input type="date" id="sessionDate" required /><br />
+        <label for="sessionTime">Time:</label><br />
+        <input type="time" id="sessionTime" required /><br />
+        <label for="videoURL">Tutorial Video Link:</label><br />
+        <input type="url" id="videoURL" placeholder="Enter video URL" required /><br />
+        <button type="submit">Schedule Session</button>
+      </form>
+    </section>
+
+    <!-- Section to display scheduled session details -->
+    <section id="sessionDetails" style="display: none;">
+      <h2>Scheduled Session</h2>
+      <p><strong>Topic:</strong> <span id="scheduledTopic"></span></p>
+      <p><strong>Date:</strong> <span id="scheduledDate"></span></p>
+      <p><strong>Time:</strong> <span id="scheduledTime"></span></p>
+      <p><strong>Tutorial Video Link:</strong> <a href="#" id="scheduledVideoLink" target="_blank">Watch Video</a></p>
+    </section>
+
+    <!-- Section to display session history -->
+    <section id="sessionHistory">
+      <h2>Session History</h2>
+      <ul id="historyList"></ul>
+    </section>
+  </main>
+</body>
+</html>

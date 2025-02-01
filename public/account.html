@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script> <!-- Link to external JavaScript -->
+</head>
+<body onload="loadUserProfile()"> <!-- Load profile on page load -->
+  <header>
+    <h1>Welcome, <span id="profileName">User</span>!</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#" onclick="logoutUser()">Logout</a> <!-- Logout function -->
+    </nav>
+  </header>
+<!--<main>
+    <section>
+      <h2>Your Profile</h2>
+      <p><strong>Name:</strong> <span id="profileName"></span></p>
+      <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+    </section>
+  </main>-->
+  <main>
+    <section>
+      <h2>Your Profile</h2>
+      <p><strong>Name:</strong> <span id="profileName"></span></p>
+      <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+    </section>
+  
+    <section>
+      <h2>Your Activity</h2>
+      
+      <!-- Scheduled Sessions -->
+      <h3>Scheduled Sessions</h3>
+      <ul id="scheduledSessionsList">
+        <li>No sessions scheduled yet.</li>
+      </ul>
+  
+      <!-- Skills Viewed -->
+      <h3>Skills Viewed</h3>
+      <ul id="skillsViewedList">
+        <li>No skills viewed yet.</li>
+      </ul>
+  
+      <!-- Forums Participated -->
+      <h3>Forum Posts</h3>
+      <ul id="forumPostsList">
+        <li>No forum activity yet.</li>
+      </ul>
+    </section>
+  </main>
+  
+</body>
+</html>
